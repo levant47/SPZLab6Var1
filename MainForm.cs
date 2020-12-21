@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -8,6 +9,7 @@ namespace SPZLab6Var1
     public partial class MainForm : Form
     {
         private Thread _clientModeThread;
+        private Thread _restockModeThread;
 
         public MainForm()
         {
@@ -38,6 +40,7 @@ namespace SPZLab6Var1
                         Shop.Purchase(productType.Id, quantity);
                         productDataGridView.Invoke(new Action(UpdateProductView));
                     }
+                    StartRestockMode();
                 }
                 catch
                 { }
@@ -45,10 +48,36 @@ namespace SPZLab6Var1
             _clientModeThread.Start();
         }
 
+        private void StartRestockMode()
+        {
+            _restockModeThread = new Thread(() =>
+            {
+                try
+                {
+                    WriteReport();
+                }
+                catch
+                { }
+            });
+            _restockModeThread.Start();
+        }
+
+        private void WriteReport()
+        {
+            var report = new Report
+            {
+                Cash = Shop.Cash,
+                PurchaseCount = Shop.PurchaseCount,
+                TotalProductCount = Shop.ProductTypes.Sum(productType => productType.Quantity),
+            };
+            File.WriteAllText("report.xml", Utilities.SerializeToXML(report));
+        }
+
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
             _clientModeThread.Interrupt();
+            _restockModeThread.Interrupt();
         }
     }
 }
