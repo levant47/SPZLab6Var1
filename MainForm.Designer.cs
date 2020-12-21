@@ -28,13 +28,91 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.ProductNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProductQuantityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProductBuyingPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProductSellingPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productDataGridView = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.productDataGridView)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // ProductNameColumn
+            // 
+            this.ProductNameColumn.HeaderText = "Название";
+            this.ProductNameColumn.Name = "ProductNameColumn";
+            this.ProductNameColumn.ReadOnly = true;
+            // 
+            // ProductQuantityColumn
+            // 
+            this.ProductQuantityColumn.HeaderText = "Колчество";
+            this.ProductQuantityColumn.Name = "ProductQuantityColumn";
+            this.ProductQuantityColumn.ReadOnly = true;
+            // 
+            // ProductBuyingPrice
+            // 
+            this.ProductBuyingPrice.HeaderText = "Цена покупки";
+            this.ProductBuyingPrice.Name = "ProductBuyingPrice";
+            this.ProductBuyingPrice.ReadOnly = true;
+            // 
+            // ProductSellingPrice
+            // 
+            this.ProductSellingPrice.HeaderText = "Цена продажи";
+            this.ProductSellingPrice.Name = "ProductSellingPrice";
+            this.ProductSellingPrice.ReadOnly = true;
+            // 
+            // productDataGridView
+            // 
+            this.productDataGridView.AllowUserToAddRows = false;
+            this.productDataGridView.AllowUserToDeleteRows = false;
+            this.productDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.productDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.productDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.productDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ProductNameColumn,
+            this.ProductQuantityColumn,
+            this.ProductBuyingPrice,
+            this.ProductSellingPrice});
+            this.productDataGridView.Location = new System.Drawing.Point(12, 37);
+            this.productDataGridView.Name = "productDataGridView";
+            this.productDataGridView.ReadOnly = true;
+            this.productDataGridView.Size = new System.Drawing.Size(643, 150);
+            this.productDataGridView.TabIndex = 0;
+            this.productDataGridView.Text = "dataGridView1";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 25);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Склад";
+            // 
+            // MainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(663, 194);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.productDataGridView);
+            this.Name = "MainForm";
             this.Text = "MainForm";
+            ((System.ComponentModel.ISupportInitialize)(this.productDataGridView)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProductNameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProductQuantityColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProductBuyingPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProductSellingPrice;
+        private System.Windows.Forms.DataGridView productDataGridView;
+        private System.Windows.Forms.Label label1;
     }
 }
 

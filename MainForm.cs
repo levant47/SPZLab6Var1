@@ -7,7 +7,15 @@ namespace SPZLab6Var1
         public MainForm()
         {
             InitializeComponent();
+
+            UpdateProductView();
         }
 
+        public void UpdateProductView()
+        {
+            productDataGridView.Rows.Clear();
+            Shop.ProductTypes.ForEach(productType => productDataGridView.Rows.Add(productType.Name, productType.Quantity, productType.BuyingPrice, productType.SellingPrice));
+        }
     }
 }
+
