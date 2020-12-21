@@ -25,6 +25,13 @@ namespace SPZLab6Var1
             Cash += boughtQuantity * targetProduct.SellingPrice;
             PurchaseCount += 1;
         }
+
+        public static void Restock(int id, int quantity)
+        {
+            var targetProductType = ProductTypes.First(productType => productType.Id == id);
+            targetProductType.Quantity += quantity;
+            Cash = Math.Max(0, Cash - quantity * targetProductType.BuyingPrice);
+        }
     }
 }
 

@@ -18,6 +18,7 @@ namespace SPZLab6Var1
             UpdateProductView();
 
             StartClientMode();
+            StartRestockMode();
         }
 
         private void UpdateProductView()
@@ -32,7 +33,7 @@ namespace SPZLab6Var1
             {
                 try
                 {
-                    foreach (var _ in Enumerable.Range(0, 10))
+                    while (true)
                     {
                         Thread.Sleep(1000);
                         var productType = Shop.ProductTypes.Where(productType => productType.Quantity != 0).ToList().GetRandomElement();
@@ -40,7 +41,6 @@ namespace SPZLab6Var1
                         Shop.Purchase(productType.Id, quantity);
                         productDataGridView.Invoke(new Action(UpdateProductView));
                     }
-                    StartRestockMode();
                 }
                 catch
                 { }
@@ -54,7 +54,15 @@ namespace SPZLab6Var1
             {
                 try
                 {
-                    WriteReport();
+                    while (true)
+                    {
+                        Thread.Sleep(10_000);
+                        WriteReport();
+                        foreach (var _ in Enumerable.Range(0, Shop.ProductTypes.Count))
+                        {
+                            Shop.Restock(Shop.ProductTypes.GetRandomElement().Id, new Random().Next(0, 100));
+                        }
+                    }
                 }
                 catch
                 { }
