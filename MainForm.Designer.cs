@@ -34,6 +34,7 @@
             this.ProductSellingPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.productDataGridView = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
+            this.reportButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.productDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,11 +91,22 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Склад";
             // 
+            // reportButton
+            // 
+            this.reportButton.Location = new System.Drawing.Point(576, 8);
+            this.reportButton.Name = "reportButton";
+            this.reportButton.Size = new System.Drawing.Size(75, 23);
+            this.reportButton.TabIndex = 2;
+            this.reportButton.Text = "Отчет";
+            this.reportButton.UseVisualStyleBackColor = true;
+            this.reportButton.Click += new System.EventHandler(this.reportButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 194);
+            this.Controls.Add(this.reportButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.productDataGridView);
             this.Name = "MainForm";
@@ -113,6 +125,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductSellingPrice;
         private System.Windows.Forms.DataGridView productDataGridView;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button reportButton;
     }
 }
 

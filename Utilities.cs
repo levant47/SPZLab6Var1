@@ -15,6 +15,12 @@ namespace SPZLab6Var1
             new XmlSerializer(typeof(T)).Serialize(stringWriter, source);
             return stringWriter.ToString();
         }
+
+        public static T DeserializeFromXML<T>(string source)
+        {
+            using var stringReader = new StringReader(source);
+            return (T)new XmlSerializer(typeof(T)).Deserialize(stringReader);
+        }
     }
 }
 

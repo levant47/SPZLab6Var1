@@ -8,6 +8,7 @@ namespace SPZLab6Var1
 {
     public partial class MainForm : Form
     {
+        private const string _reportPath = "report.xml";
         private Thread _clientModeThread;
         private Thread _restockModeThread;
 
@@ -78,7 +79,7 @@ namespace SPZLab6Var1
                 PurchaseCount = Shop.PurchaseCount,
                 TotalProductCount = Shop.ProductTypes.Sum(productType => productType.Quantity),
             };
-            File.WriteAllText("report.xml", Utilities.SerializeToXML(report));
+            File.WriteAllText(_reportPath, Utilities.SerializeToXML(report));
         }
 
         protected override void OnClosed(EventArgs e)
@@ -86,6 +87,16 @@ namespace SPZLab6Var1
             base.OnClosed(e);
             _clientModeThread.Interrupt();
             _restockModeThread.Interrupt();
+        }
+
+        private void reportButton_Click(object sender, EventArgs e)
+        {
+            if (!File.Exists(_reportPath))
+            {
+                return;
+            }
+            var report = Utilities.DeserializeFromXML<Report>(File.ReadAllText(_reportPath));
+            new ReportForm(report).Show();
         }
     }
 }
