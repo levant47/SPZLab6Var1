@@ -6,6 +6,7 @@ namespace SPZLab6Var1
 {
     public static class Shop
     {
+        private static object _mutex = new object();
         public static List<ProductType> ProductTypes = new List<ProductType>
         {
             new ProductType { Id = 1, Name = "Butter", Quantity = 100, BuyingPrice = 10, SellingPrice = 12 },
@@ -21,16 +22,22 @@ namespace SPZLab6Var1
         {
             var targetProduct = ProductTypes.First(productType => productType.Id == productTypeId);
             var boughtQuantity = Math.Clamp(quantity, 0, targetProduct.Quantity);
-            targetProduct.Quantity -= boughtQuantity;
-            Cash += boughtQuantity * targetProduct.SellingPrice;
-            PurchaseCount += 1;
+            lock (_mutex)
+            {
+                targetProduct.Quantity -= boughtQuantity;
+                Cash += boughtQuantity * targetProduct.SellingPrice;
+                PurchaseCount += 1;
+            }
         }
 
         public static void Restock(int id, int quantity)
         {
             var targetProductType = ProductTypes.First(productType => productType.Id == id);
-            targetProductType.Quantity += quantity;
-            Cash = Math.Max(0, Cash - quantity * targetProductType.BuyingPrice);
+            lock (_mutex)
+            {
+                targetProductType.Quantity += quantity;
+                Cash = Math.Max(0, Cash - quantity * targetProductType.BuyingPrice);
+            }
         }
     }
 }

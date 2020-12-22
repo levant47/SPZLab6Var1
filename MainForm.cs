@@ -9,6 +9,8 @@ namespace SPZLab6Var1
     public partial class MainForm : Form
     {
         private const string _reportPath = "report.xml";
+        private bool _isRunning = true;
+        private ManualResetEvent _manualResetEvent = new ManualResetEvent(false);
         private Thread _clientModeThread;
         private Thread _restockModeThread;
 
@@ -36,7 +38,11 @@ namespace SPZLab6Var1
                 {
                     while (true)
                     {
-                        Thread.Sleep(1000);
+                        _manualResetEvent.WaitOne(TimeSpan.FromSeconds(1));
+                        if (!_isRunning)
+                        {
+                            return;
+                        }
                         var productType = Shop.ProductTypes.Where(productType => productType.Quantity != 0).ToList().GetRandomElement();
                         var quantity = new Random().Next(1, productType.Quantity);
                         Shop.Purchase(productType.Id, quantity);
@@ -57,7 +63,11 @@ namespace SPZLab6Var1
                 {
                     while (true)
                     {
-                        Thread.Sleep(10_000);
+                        _manualResetEvent.WaitOne(TimeSpan.FromSeconds(10));
+                        if (!_isRunning)
+                        {
+                            return;
+                        }
                         WriteReport();
                         foreach (var _ in Enumerable.Range(0, Shop.ProductTypes.Count))
                         {
@@ -85,8 +95,10 @@ namespace SPZLab6Var1
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            _clientModeThread.Interrupt();
-            _restockModeThread.Interrupt();
+            _isRunning = false;
+            _manualResetEvent.Set();
+            _clientModeThread.Join();
+            _restockModeThread.Join();
         }
 
         private void reportButton_Click(object sender, EventArgs e)
